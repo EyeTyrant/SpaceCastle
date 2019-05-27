@@ -45,10 +45,10 @@ var outerPlates;
 
 
 function create() {
-// create castle
+  // create castle
   castle = this.physics.add.sprite(800, 600, 'castle');
 
-// castle tween to point at playerShip
+  // castle tween to point at playerShip
   tween = this.tweens.add({
     targets: castle,
     x: 800,
@@ -66,10 +66,10 @@ function create() {
 
 
 
-// create innerShield 
+  // create innerShield 
   innerShield = this.add.graphics(castle);
   innerShield.lineStyle(4, 0x00f0aa, 1.0);
-  
+
 
   innerPlates = [
     new Phaser.Geom.Line(26, -97, -26, -97),
@@ -83,9 +83,9 @@ function create() {
     new Phaser.Geom.Line(71, 71, 97, 26),
     new Phaser.Geom.Line(97, 26, 97, -26),
     new Phaser.Geom.Line(97, -26, 71, -71),
-    new Phaser.Geom.Line(71,-71,26,-97),
-];
-// create middleShield
+    new Phaser.Geom.Line(71, -71, 26, -97),
+  ];
+  // create middleShield
   middleShield = this.add.graphics(castle);
   middleShield.lineStyle(4, 0x40a00a, 1.0);
 
@@ -102,13 +102,13 @@ function create() {
     new Phaser.Geom.Line(145, 39, 145, -39),
     new Phaser.Geom.Line(145, -39, 106, -106),
     new Phaser.Geom.Line(106, -106, 39, -145),
-];
-// create outerShield
+  ];
+  // create outerShield
   outerShield = this.add.graphics(castle);
   outerShield.lineStyle(4, 0x00f0aa, 1.0);
 
-  
-  
+
+
   outerPlates = [
     new Phaser.Geom.Line(52, -193, -52, -193),
     new Phaser.Geom.Line(-52, -193, -141, -141),
@@ -122,10 +122,10 @@ function create() {
     new Phaser.Geom.Line(193, 52, 193, -52),
     new Phaser.Geom.Line(193, -52, 141, -141),
     new Phaser.Geom.Line(141, -141, 52, -193),
-];
-  
+  ];
 
-  
+
+
 
   // create playerShip
   playerShip = this.physics.add.sprite(1400, 600, 'playerShip');
@@ -209,16 +209,16 @@ function create() {
   fire = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
   // create colliders
-  
- 
-  
+
+
+
 }
-                    
+
 
 function update(time) {
-  
-  
-  
+
+
+
 
   // point castle at playerShip
   castle.rotation = Math.atan2(playerShip.y - castle.y, playerShip.x - castle.x);
@@ -236,15 +236,15 @@ function update(time) {
 
   // rotate shields
   for (var i = 0; i < innerPlates.length; i++) {
-    innerShield.strokeLineShape(innerPlates[i]); 
+    innerShield.strokeLineShape(innerPlates[i]);
     innerShield.rotation += 0.002;
   }
   for (var i = 0; i < middlePlates.length; i++) {
-    middleShield.strokeLineShape(middlePlates[i]); 
+    middleShield.strokeLineShape(middlePlates[i]);
     middleShield.rotation += -0.00175;
   }
   for (var i = 0; i < outerPlates.length; i++) {
-    outerShield.strokeLineShape(outerPlates[i]); 
+    outerShield.strokeLineShape(outerPlates[i]);
     outerShield.rotation += 0.0015;
   }
 
@@ -279,5 +279,5 @@ function update(time) {
   }
   // create world wrap
   this.physics.world.wrap(playerShip, 0);
-  
+
 }
