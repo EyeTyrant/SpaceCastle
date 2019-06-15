@@ -68,7 +68,7 @@ function create() {
 
 // create innerShield 
   innerShield = this.add.graphics(castle);
-  innerShield.lineStyle(4, 0x00f0aa, 1.0);
+  innerShield.lineStyle(4, 0xf72222, 1.0);
   
 
   innerPlates = [
@@ -87,7 +87,7 @@ function create() {
 ];
 // create middleShield
   middleShield = this.add.graphics(castle);
-  middleShield.lineStyle(4, 0x40a00a, 1.0);
+  middleShield.lineStyle(4, 0xf7a121, 1.0);
 
   middlePlates = [
     new Phaser.Geom.Line(39, -145, -39, -145),
@@ -105,7 +105,7 @@ function create() {
 ];
 // create outerShield
   outerShield = this.add.graphics(castle);
-  outerShield.lineStyle(4, 0x00f0aa, 1.0);
+  outerShield.lineStyle(4, 0xadea2a, 1.0);
 
   
   
@@ -226,11 +226,9 @@ function update(time) {
   if (tween.isPlaying()) {
     tween.updateTo('x', playerShip.x, true);
     tween.updateTo('y', playerShip.y, true);
-
-    //text.setText('Progress: ' + tween.progress);
   }
   else {
-    //text.setText('Click to start');
+    
   }
 
 

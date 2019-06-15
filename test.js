@@ -3,17 +3,20 @@ var config = {
   type: Phaser.AUTO,
   width: 1600,
   height: 1200,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { x: 0, y: 0 },
-      debug: true
-    },
-  },
   scene: {
     preload: preload,
     create: create,
     update: update,
+    physics: {
+      
+      arcade: {
+        gravity: { x: 0, y: 0 },
+        debug: true
+      },
+      
+    
+    
+    }
   }
 };
 // Create Game object
@@ -42,9 +45,20 @@ var middleShield;
 var middlePlates;
 var outerShield;
 var outerPlates;
+// var end = outerShield.getPointB(outerShield);
+// var mid = outerShield.getMidPoint(outerShield);
+// var body = outerShield.body;
+// var allowRotation;
+// var bound;
+var point1;
+var myPoint;
 
 
 function create() {
+
+  myPoint = this.add.graphics({ fillStyle: { color: 0x777777 } });
+  point1 = new Phaser.Geom.Point(100);
+  myPoint.fillPointShape(point1, 30);
   // create castle
   castle = this.physics.add.sprite(800, 600, 'castle');
 
@@ -64,11 +78,11 @@ function create() {
 
   });
 
-
+ 
 
   // create innerShield 
   innerShield = this.add.graphics(castle);
-  innerShield.lineStyle(4, 0x00f0aa, 1.0);
+  innerShield.lineStyle(4, 0xf72222, 1.0);
 
 
   innerPlates = [
@@ -87,7 +101,7 @@ function create() {
   ];
   // create middleShield
   middleShield = this.add.graphics(castle);
-  middleShield.lineStyle(4, 0x40a00a, 1.0);
+  middleShield.lineStyle(4, 0xf7a121, 1.0);
 
   middlePlates = [
     new Phaser.Geom.Line(39, -145, -39, -145),
@@ -104,27 +118,56 @@ function create() {
     new Phaser.Geom.Line(106, -106, 39, -145),
   ];
   // create outerShield
-  outerShield = this.add.graphics(castle);
-  outerShield.lineStyle(4, 0x00f0aa, 1.0);
+  outerShield = this.add.graphics(castle).lineStyle(4, 0xadea2a, 1.0).lineBetween(52, -193, -52, -193);
+  // outerShield.enableBody()
+  // new Phaser.Geom.Line(52, -193, -52, -193);
+  // outerShield.getBounds(bound);
+  
+  
+  // body = outerShield.body;
+  // game.physics.enable(outerShield);
+  // //this.physics.add.existing(outerShield);
+  
+  
+  // body.updateFromGameObject(outerShield);
+  
+  // //outerShield.body.setSize(4, 100, true).setImmovable().setOffset(190, -50);
+  
+  // var zones = this.physics.add.staticGroup();
+
+  // zones.add(this.add.zone(200,200,1400,4));
+  
+  console.log(outerShield);
+  // outerPlates.getCenter();
+  // allowRotation = body.allowRotation;
+  // outerPlates.body.syncBounds = true;
+  
+  // outerShield.rotateAroundXY(castle);
+  //outerShield.body.collideWorldBounds = true;
+
+  
+
+  // outerPlates = [
+  //   outerShield.lineBetween(52, -193, -52, -193),
+  //   outerShield.lineBetween(-52, -193, -141, -141),
+  //   outerShield.lineBetween(-141, -141, -193, -52),
+  //   outerShield.lineBetween(-193, -52, -193, 52),
+  //   outerShield.lineBetween(-193, 52, -141, 141),
+  //   outerShield.lineBetween(-141, 141, -52, 193),
+  //   outerShield.lineBetween(-52, 193, 52, 193),
+  //   outerShield.lineBetween(52, 193, 141, 141),
+  //   outerShield.lineBetween(141, 141, 193, 52),
+  //   outerShield.lineBetween(193, 52, 193, -52),
+  //   outerShield.lineBetween(193, -52, 141, -141), 
+  //   outerShield.lineBetween(141, -141, 52, -193),
+  // ];
+  // for (var i = 0; i < outerPlates.length; i++) {
+  //   this.physics.add.existing(outerPlates[i]);
+  //   outerShield.body.setSize(4, 100, true).setImmovable().setOffset(190, -50)
+  // };
 
 
-
-  outerPlates = [
-    new Phaser.Geom.Line(52, -193, -52, -193),
-    new Phaser.Geom.Line(-52, -193, -141, -141),
-    new Phaser.Geom.Line(-141, -141, -193, -52),
-    new Phaser.Geom.Line(-193, -52, -193, 52),
-    new Phaser.Geom.Line(-193, 52, -141, 141),
-    new Phaser.Geom.Line(-141, 141, -52, 193),
-    new Phaser.Geom.Line(-52, 193, 52, 193),
-    new Phaser.Geom.Line(52, 193, 141, 141),
-    new Phaser.Geom.Line(141, 141, 193, 52),
-    new Phaser.Geom.Line(193, 52, 193, -52),
-    new Phaser.Geom.Line(193, -52, 141, -141),
-    new Phaser.Geom.Line(141, -141, 52, -193),
-  ];
-
-
+  
 
 
   // create playerShip
@@ -210,7 +253,10 @@ function create() {
 
   // create colliders
 
+  this.physics.add.collider(bullets, zones);
 
+
+  
 
 }
 
@@ -218,7 +264,7 @@ function create() {
 function update(time) {
 
 
-
+  
 
   // point castle at playerShip
   castle.rotation = Math.atan2(playerShip.y - castle.y, playerShip.x - castle.x);
@@ -243,11 +289,14 @@ function update(time) {
     middleShield.strokeLineShape(middlePlates[i]);
     middleShield.rotation += -0.00175;
   }
-  for (var i = 0; i < outerPlates.length; i++) {
-    outerShield.strokeLineShape(outerPlates[i]);
-    outerShield.rotation += 0.0015;
-  }
-
+  // for (var i = 0; i < outerPlates.length; i++) {
+  //   outerShield.strokeLineShape(outerPlates[i]);
+  //   
+  // }
+  
+  outerShield.rotation += 0.050;
+  
+  
   // keyboard actions
   if (cursors.left.isDown) {
     playerShip.setAngularVelocity(-150);
@@ -279,5 +328,23 @@ function update(time) {
   }
   // create world wrap
   this.physics.world.wrap(playerShip, 0);
+  
+
+  // if (checkOverlap(points, outerShield)) {
+  //   console.log('hit');
+  // }
+  // else {
+  //   console.log('miss');
+  // }
 
 }
+
+// function checkOverlap(spriteA, spriteB) {
+
+//   var boundsA = spriteA.getBounds();
+//   var boundsB = spriteB.getBounds();
+
+//   return Phaser.Rectangle.intersects(boundsA, boundsB);
+
+// }
+// console.log(myPoint);
